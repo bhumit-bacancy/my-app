@@ -1,31 +1,30 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 
 export default function DemoHook() {
-  const [number, setNumber] = useState(0)
-  const [dark, setDark] = useState(false)
-  const doubleNumber = useMemo(() => {
-    return slowFunction(number)
-  }, [number])
-  const themeStyles = useMemo(() => {
-    return {
-    backgroundColor: dark ? 'black' : 'white',
-    color: dark ? 'white' : 'black'
-  }}, [dark])
+  const [name, setName] = useState('')
+  const prevName = useRef()
+  // const inputFocus = useRef()
+  // const counter = useRef(0)
+
+  // useEffect(() => {
+  //   counter.current = counter.current + 1
+  // })
+
+  // function focus() {
+  //   inputFocus.current.focus()
+  // }
 
   useEffect(() => {
-    console.log("theme changed")
-  }, [themeStyles])
+    prevName.current = name
+  }, [name])
+  
   return (
     <>
-      <input type="number" value={number} onChange={e => setNumber(parseInt(e.target.value))} />
-      <button onClick={() => setDark(prevDark => !prevDark)}>Change Theme</button>
-      <div style={themeStyles}>{doubleNumber}</div>
+      <input value={name} onChange={e => setName((e.target.value))} />
+      <div>My Name is {name} and prev value was: {prevName.current}</div>
+      {/* <button onClick={focus}>Focus</button> */}
+      {/* <div>Rendered {counter.current} times</div> */}
     </>
   );
 }
 
-function slowFunction(num){
-  console.log("calling slow")
-  for(let i = 0; i <= 1000000000; i++){}
-  return num * 2
-}
