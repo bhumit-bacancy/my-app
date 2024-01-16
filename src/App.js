@@ -1,17 +1,16 @@
-import React, { useReducer, useState, useTransition } from "react";
-import List from "./components/List";
+import React, { useReducer, useRef, useState, useTransition } from "react";
+import CustomInput from "./components/CustomInput";
 
 function App() {
-  const [input, setInput] = useState("");
+  const [value, setValue] = useState("red");
+  const inputRef = useRef()
 
-  function handleChange(e) {
-    setInput(e.target.value);
-  }
   return (
     <>
       <div className="container">
-        <input type="text" value={input} onChange={handleChange} />
-        <List input={input} />
+        <CustomInput ref={inputRef} value={value} onChange={e => setValue(e.target.value)} />
+        <br />
+        <button onClick={() => inputRef.current.alertHi()}>Focus</button>
       </div>
     </>
   );
