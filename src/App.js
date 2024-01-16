@@ -1,32 +1,20 @@
 import React, { useReducer, useState, useTransition } from "react";
+import List from "./components/List";
 
 function App() {
-  const [isPending, startTransition] = useTransition()
-  const [input, setInput] = useState("")
-  const [list, setList] = useState([])
-
-  const LIST_SIZE = 20000
+  const [input, setInput] = useState("");
 
   function handleChange(e) {
-    setInput(e.target.value)
-    startTransition(() => {
-      const l = []
-      for (let i = 0; i < LIST_SIZE; i++) {
-        l.push(e.target.value)
-      }
-      setList(l)
-    })
+    setInput(e.target.value);
   }
   return (
     <>
-    <div className="container">
-      <input type="text" value={input} onChange={handleChange} />
-      {isPending ? "Loading...." : list.map((item, index) => {
-        return <div key={index}>{item}</div>
-      })}
-    </div>
+      <div className="container">
+        <input type="text" value={input} onChange={handleChange} />
+        <List input={input} />
+      </div>
     </>
-  )
+  );
 }
 
 export default App;
