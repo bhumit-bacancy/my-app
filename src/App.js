@@ -1,16 +1,20 @@
-import React, { useCallback, useEffect, useReducer, useState } from "react";
+import React, { useCallback, useReducer, useState } from "react";
+import useLocalStorage from "./components/useLocalStorage";
+import useUpdateLogger from "./components/useUpdateLogger";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    console.log(count)
-  }, [count])
+  const [name, setName] = useLocalStorage('name', '');
+  useUpdateLogger(name)
   return (
     <>
       <div className="container">
-        <button onClick={() => setCount(c => c + 1)}>Increment</button>
-        <div>{count}</div>
+        <div>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
       </div>
     </>
   );
